@@ -23,7 +23,7 @@ export function PizzaBlock({ id, imageUrl, title, types, sizes, price, category,
         <ul>
           {sizes.map((s, i) => {
             return (
-              <li className={activeSize === i ? 'active' : ''} onClick={() => setActiveSize(i)}>
+              <li key={i} className={activeSize === i ? 'active' : ''} onClick={() => setActiveSize(i)}>
                 {s} см.
               </li>
             )
