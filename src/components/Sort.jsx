@@ -1,7 +1,7 @@
 import React from 'react'
 
 export function Sort() {
-  const [activeSort, setActiveSort] = React.useState(0)
+  const [selected, setSelected] = React.useState(0)
   const [collapsed, setCollapsed] = React.useState(true)
 
   const sort = ['популярности', 'цене', 'алфавиту']
@@ -16,18 +16,18 @@ export function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setCollapsed(false)}>{sort[activeSort]}</span>
+        <span onClick={() => setCollapsed(!collapsed)}>{sort[selected]}</span>
       </div>
-      {!collapsed ? (
+      {!collapsed && (
         <div className='sort__popup'>
           <ul>
             {sort.map((el, i) => {
               return (
                 <li
                   key={i}
-                  className={activeSort === i ? 'active' : ''}
+                  className={selected === i ? 'active' : ''}
                   onClick={() => {
-                    setActiveSort(i)
+                    setSelected(i)
                     setCollapsed(true)
                   }}>
                   {sort[i]}
@@ -36,8 +36,6 @@ export function Sort() {
             })}
           </ul>
         </div>
-      ) : (
-        ''
       )}
     </div>
   )
