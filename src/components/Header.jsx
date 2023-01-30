@@ -7,7 +7,7 @@ export function Header() {
   return (
     <div className='header'>
       <div className='container'>
-        <Link to={'/'}>
+        <Link to='/'>
           <div className='header__logo'>
             <img width='38' src={pizzaSvg} alt='Pizza logo' />
             <div>
@@ -16,9 +16,9 @@ export function Header() {
             </div>
           </div>
         </Link>
-        <Link to={'cart'}>
+        <Link to={'/cart'}>
           <div className='header__cart'>
-            <a href='/cart.html' className='button button--cart'>
+            <Link to='cart' className='button button--cart'>
               <span>520 ₽</span>
               <div className='button__delimiter'></div>
               <svg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -45,7 +45,7 @@ export function Header() {
                 />
               </svg>
               <span>3</span>
-            </a>
+            </Link>
           </div>
         </Link>
       </div>
