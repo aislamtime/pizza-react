@@ -1,0 +1,40 @@
+.root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  :global {
+    li {
+      margin: 0 2.5px;
+      &.disabled:hover {
+        a:hover {
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+      }
+      &.selected {
+        min-width: 30px;
+        border-radius: 50px;
+        background-color: RGB(227, 57, 16);
+        a {
+          color: white;
+        }
+      }
+      a {
+        transition: all 0.3s ease 0s;
+
+        display: inline-block;
+        text-align: center;
+        padding: 4px;
+        min-width: 30px;
+        height: 30px;
+        background-color: rgba(0, 0, 0, 0.1);
+        //border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 50px;
+        cursor: pointer;
+        &:hover {
+          background-color: RGB(227, 57, 16);
+          color: white;
+        }
+      }
+    }
+  }
+}

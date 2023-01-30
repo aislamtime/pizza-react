@@ -4,6 +4,7 @@ import { Sort } from '../components/Sort'
 import { Categories } from '../components/Categories'
 import { PizzaBlock } from '../components/PizzaBlock'
 import { Skeleton } from '../components/PizzaBlock/Skeleton'
+import Paginaiton from '../components/Pagination'
 
 export default function Home({ searchValue, setSearchValue }) {
   const [items, setItems] = React.useState([])
@@ -12,6 +13,7 @@ export default function Home({ searchValue, setSearchValue }) {
   const [activeSort, setActiveSort] = React.useState(0)
   const [categoryId, setCategoryId] = React.useState(0)
   const [isOrderDesc, setOrder] = React.useState(true) // desc- or asc+
+  const [pageNumber, setPageNumber] = React.useState(0)
 
   const changeActiveSort = (index) => {
     setActiveSort(index)
@@ -23,16 +25,17 @@ export default function Home({ searchValue, setSearchValue }) {
   const category = categoryId ? `&category=${categoryId}` : ''
   const sort = `sortBy=${activeSort === 0 ? 'raiting' : activeSort === 1 ? 'price' : activeSort === 2 ? 'title' : ''}`
   const order = 'order=' + (isOrderDesc ? 'desc' : 'asc')
+  const page = `p=${pageNumber + 1}&l=4`
 
   React.useEffect(() => {
     setIsFetching(true)
-    fetch(`https://63d12d27120b32bbe8f2dbf8.mockapi.io/items?${category}&${sort}&${order}`, [])
+    fetch(`https://63d12d27120b32bbe8f2dbf8.mockapi.io/items?${category}&${page}&${sort}&${order}`, [])
       .then((res) => res.json())
       .then((items) => {
         setItems(items)
         setIsFetching(false)
       })
-  }, [activeSort, categoryId, isOrderDesc])
+  }, [activeSort, categoryId, isOrderDesc, pageNumber])
 
   const pizzas = items
     .filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
@@ -59,6 +62,7 @@ export default function Home({ searchValue, setSearchValue }) {
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>{isFetching ? sceletons : pizzas}</div>
+      <Paginaiton pageNumber={pageNumber} setPageNumber={setPageNumber} />
     </>
   )
 }
