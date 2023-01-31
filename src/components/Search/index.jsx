@@ -1,10 +1,29 @@
+import debounce from 'lodash.debounce'
 import React from 'react'
 
 import { SearchContext } from '../../App'
 import s from './Search.module.scss'
 
 export default function Search() {
+  const [localInputValue, setLocalInputValue] = React.useState('')
   const { searchValue, setSearchValue } = React.useContext(SearchContext)
+  const inputRef = React.useRef()
+
+  const search = React.useCallback(
+    debounce((value) => setSearchValue(value), 1000),
+    [],
+  )
+
+  const changeInputValue = (e) => {
+    setLocalInputValue(e)
+    search(localInputValue)
+  }
+
+  const onClearInput = () => {
+    setSearchValue('')
+    setLocalInputValue('')
+    inputRef.current.focus()
+  }
 
   return (
     <div className={s.root}>
@@ -12,15 +31,16 @@ export default function Search() {
         <path d='M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z' />
       </svg>
       <input
-        value={searchValue}
-        onChange={(e) => setSearchValue(e.currentTarget.value)}
+        ref={inputRef}
+        value={localInputValue}
+        onChange={(e) => changeInputValue(e.currentTarget.value)}
         className={s.input}
         placeholder='Поиск пиццы..'
         type='text'
       />
       {searchValue ? (
         <svg
-          onClick={() => setSearchValue('')}
+          onClick={onClearInput}
           className={s.closeIcon}
           xmlns='http://www.w3.org/2000/svg'
           viewBox='0 0 24 24'

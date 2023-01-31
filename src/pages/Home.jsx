@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import axios from 'axios'
 
 import { Sort } from '../components/Sort'
 import { Categories } from '../components/Categories'
@@ -16,23 +17,22 @@ export default function Home() {
   const [isFetching, setIsFetching] = React.useState(true)
 
   const category = categoryId ? `&category=${categoryId}` : ''
-  const sort = `sortBy=${activeSort === 0 ? 'raiting' : activeSort === 1 ? 'price' : activeSort === 2 ? 'title' : ''}`
-  const order = 'order=' + (isOrderDesc ? 'desc' : 'asc') // desc - по убыванию, asc - по возрастанию
-  const page = `p=${pageNumber}&l=4` // +1 добавил потому что pageNumber = 0 а запросить можно тока от 1
+  const sort = `&sortBy=${activeSort === 0 ? 'raiting' : activeSort === 1 ? 'price' : activeSort === 2 ? 'title' : ''}`
+  const order = '&order=' + (isOrderDesc ? 'desc' : 'asc') // desc - по убыванию, asc - по возрастанию
+  const page = `&p=${pageNumber}&l=4` // +1 добавил потому что pageNumber = 0 а запросить можно тока от 1
+  const search = `&search=${searchValue}`
 
   React.useEffect(() => {
     setIsFetching(true)
-    fetch(`https://63d12d27120b32bbe8f2dbf8.mockapi.io/items?${category}&${page}&${sort}&${order}`, [])
-      .then((res) => res.json())
-      .then((items) => {
-        setItems(items)
+    axios
+      .get(`https://63d12d27120b32bbe8f2dbf8.mockapi.io/items?${category}${page}${sort}${order}${search}`)
+      .then((res) => {
+        setItems(res.data)
         setIsFetching(false)
       })
-  }, [activeSort, categoryId, isOrderDesc, pageNumber])
+  }, [activeSort, categoryId, isOrderDesc, pageNumber, searchValue])
 
-  const pizzas = items
-    .filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
-    .map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)
+  const pizzas = items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)
 
   const sceletons = [...new Array(8)].map((_, i) => <Skeleton key={i} />)
 
