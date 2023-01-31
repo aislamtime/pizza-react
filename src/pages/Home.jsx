@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 import { Sort } from '../components/Sort'
 import { Categories } from '../components/Categories'
@@ -8,19 +9,16 @@ import { Pagination } from '../components/Pagination'
 import { SearchContext } from '../App'
 
 export default function Home() {
+  const { activeSort, categoryId, isOrderDesc, pageNumber } = useSelector((state) => state.filter)
+
   const { searchValue } = React.useContext(SearchContext)
   const [items, setItems] = React.useState([]) // all pizzas
   const [isFetching, setIsFetching] = React.useState(true)
 
-  const [activeSort, setActiveSort] = React.useState(0)
-  const [categoryId, setCategoryId] = React.useState(0)
-  const [isOrderDesc, setOrder] = React.useState(true) // desc- or asc+
-  const [pageNumber, setPageNumber] = React.useState(0) // active page number (index)
-
   const category = categoryId ? `&category=${categoryId}` : ''
   const sort = `sortBy=${activeSort === 0 ? 'raiting' : activeSort === 1 ? 'price' : activeSort === 2 ? 'title' : ''}`
   const order = 'order=' + (isOrderDesc ? 'desc' : 'asc') // desc - по убыванию, asc - по возрастанию
-  const page = `p=${pageNumber + 1}&l=4` // +1 добавил потому что pageNumber = 0 а запросить можно тока от 1
+  const page = `p=${pageNumber}&l=4` // +1 добавил потому что pageNumber = 0 а запросить можно тока от 1
 
   React.useEffect(() => {
     setIsFetching(true)
@@ -41,17 +39,12 @@ export default function Home() {
   return (
     <>
       <div className='content__top'>
-        <Categories value={categoryId} onChangeValue={(index) => setCategoryId(index)} />
-        <Sort
-          activeSort={activeSort}
-          setActiveSort={(index) => setActiveSort(index)}
-          isOrderDesc={isOrderDesc}
-          changeOrder={() => setOrder(!isOrderDesc)}
-        />
+        <Categories />
+        <Sort />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>{isFetching ? sceletons : pizzas}</div>
-      <Pagination pageNumber={pageNumber} setPageNumber={setPageNumber} />
+      <Pagination />
     </>
   )
 }

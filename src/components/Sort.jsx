@@ -1,7 +1,12 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-export function Sort({ activeSort, setActiveSort, isOrderDesc, changeOrder }) {
-  //const [selected, setSelected] = React.useState(0)
+import { changeActiveSort, changeOrder } from '../redux/slices/filterSlice'
+
+export function Sort() {
+  const { activeSort, isOrderDesc } = useSelector((state) => state.filter)
+  const dispatch = useDispatch()
+
   const [collapsed, setCollapsed] = React.useState(true)
 
   const sort = ['популярности', 'цене', 'алфавиту']
@@ -9,7 +14,7 @@ export function Sort({ activeSort, setActiveSort, isOrderDesc, changeOrder }) {
   return (
     <div className='sort'>
       <div className='sort__label'>
-        <div className={'sort__order'} onClick={changeOrder}>
+        <div className={'sort__order'} onClick={() => dispatch(changeOrder())}>
           <svg
             className={isOrderDesc ? 'sort__order-desc' : ''}
             width='10'
@@ -35,7 +40,7 @@ export function Sort({ activeSort, setActiveSort, isOrderDesc, changeOrder }) {
                   key={i}
                   className={activeSort === i ? 'active' : ''}
                   onClick={() => {
-                    setActiveSort(i)
+                    dispatch(changeActiveSort(i))
                     setCollapsed(true)
                   }}>
                   {sort[i]}
