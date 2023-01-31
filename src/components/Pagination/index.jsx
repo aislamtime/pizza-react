@@ -3,7 +3,7 @@ import ReactPaginate from 'react-paginate'
 
 import s from './Pagination.module.scss'
 
-export default function Pagination({ pageNumber, setPageNumber }) {
+export function Pagination({ pageNumber, setPageNumber }) {
   return (
     <ReactPaginate
       className={s.root}

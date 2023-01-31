@@ -1,8 +1,11 @@
 import React from 'react'
 
+import { SearchContext } from '../../App'
 import s from './Search.module.scss'
 
-export default function Search({ searchValue, setSearchValue }) {
+export default function Search() {
+  const { searchValue, setSearchValue } = React.useContext(SearchContext)
+
   return (
     <div className={s.root}>
       <svg className={s.icon} xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30' width='30px' height='30px'>

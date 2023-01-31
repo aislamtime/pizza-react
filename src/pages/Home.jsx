@@ -4,9 +4,11 @@ import { Sort } from '../components/Sort'
 import { Categories } from '../components/Categories'
 import { PizzaBlock } from '../components/PizzaBlock'
 import { Skeleton } from '../components/PizzaBlock/Skeleton'
-import Paginaiton from '../components/Pagination'
+import { Pagination } from '../components/Pagination'
+import { SearchContext } from '../App'
 
-export default function Home({ searchValue, setSearchValue }) {
+export default function Home() {
+  const { searchValue } = React.useContext(SearchContext)
   const [items, setItems] = React.useState([]) // all pizzas
   const [isFetching, setIsFetching] = React.useState(true)
 
@@ -14,13 +16,6 @@ export default function Home({ searchValue, setSearchValue }) {
   const [categoryId, setCategoryId] = React.useState(0)
   const [isOrderDesc, setOrder] = React.useState(true) // desc- or asc+
   const [pageNumber, setPageNumber] = React.useState(0) // active page number (index)
-
-  const changeActiveSort = (index) => {
-    setActiveSort(index)
-  }
-  const changeCategoryId = (index) => {
-    setCategoryId(index)
-  }
 
   const category = categoryId ? `&category=${categoryId}` : ''
   const sort = `sortBy=${activeSort === 0 ? 'raiting' : activeSort === 1 ? 'price' : activeSort === 2 ? 'title' : ''}`
@@ -39,30 +34,24 @@ export default function Home({ searchValue, setSearchValue }) {
 
   const pizzas = items
     .filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
-    .map((pizza) => {
-      return (
-        <>
-          <PizzaBlock key={pizza.id} {...pizza} />
-        </>
-      )
-    })
+    .map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)
 
   const sceletons = [...new Array(8)].map((_, i) => <Skeleton key={i} />)
 
   return (
     <>
       <div className='content__top'>
-        <Categories value={categoryId} onChangeValue={changeCategoryId} />
+        <Categories value={categoryId} onChangeValue={(index) => setCategoryId(index)} />
         <Sort
           activeSort={activeSort}
-          setActiveSort={changeActiveSort}
+          setActiveSort={(index) => setActiveSort(index)}
           isOrderDesc={isOrderDesc}
           changeOrder={() => setOrder(!isOrderDesc)}
         />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       <div className='content__items'>{isFetching ? sceletons : pizzas}</div>
-      <Paginaiton pageNumber={pageNumber} setPageNumber={setPageNumber} />
+      <Pagination pageNumber={pageNumber} setPageNumber={setPageNumber} />
     </>
   )
 }
