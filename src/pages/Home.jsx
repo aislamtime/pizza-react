@@ -24,6 +24,8 @@ export default function Home() {
 
   React.useEffect(() => {
     setIsFetching(true)
+    window.scrollTo(0, 0)
+
     axios
       .get(`https://63d12d27120b32bbe8f2dbf8.mockapi.io/items?${category}${page}${sort}${order}${search}`)
       .then((res) => {

@@ -1,5 +1,5 @@
-import debounce from 'lodash.debounce'
 import React from 'react'
+import debounce from 'lodash.debounce'
 
 import { SearchContext } from '../../App'
 import s from './Search.module.scss'
@@ -10,7 +10,7 @@ export default function Search() {
   const inputRef = React.useRef()
 
   const search = React.useCallback(
-    debounce((value) => setSearchValue(value), 1000),
+    debounce((value) => setSearchValue(value), 300),
     [],
   )
 

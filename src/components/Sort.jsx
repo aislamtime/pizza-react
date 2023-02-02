@@ -8,6 +8,7 @@ export function Sort() {
   const dispatch = useDispatch()
 
   const [collapsed, setCollapsed] = React.useState(true)
+  const [hoveredItem, setHoveredItem] = React.useState(0)
 
   const sort = ['популярности', 'цене', 'алфавиту']
 
@@ -29,20 +30,28 @@ export function Sort() {
           </svg>
         </div>
         <b>Сортировка по:</b>
-        <span onClick={() => setCollapsed(!collapsed)}>{sort[activeSort]}</span>
+        <span
+          tabIndex={0}
+          onBlur={
+            !collapsed
+              ? () => {
+                  dispatch(changeActiveSort(hoveredItem))
+                  setCollapsed(true)
+                }
+              : () => {}
+          }
+          onClick={() => {
+            setCollapsed(!collapsed)
+          }}>
+          {sort[activeSort]}
+        </span>
       </div>
       {!collapsed && (
         <div className='sort__popup'>
           <ul>
             {sort.map((el, i) => {
               return (
-                <li
-                  key={i}
-                  className={activeSort === i ? 'active' : ''}
-                  onClick={() => {
-                    dispatch(changeActiveSort(i))
-                    setCollapsed(true)
-                  }}>
+                <li key={i} className={activeSort === i ? 'active' : ''} onMouseEnter={() => setHoveredItem(i)}>
                   {sort[i]}
                 </li>
               )

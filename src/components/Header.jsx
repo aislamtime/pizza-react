@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom'
 
 import Search from './Search'
 import pizzaSvg from '../assets/img/pizza-logo.svg'
+import { useSelector } from 'react-redux'
 
 export function Header() {
+  const { currentPrice, currentCount } = useSelector((state) => state.cart)
+
   return (
     <div className='header'>
       <div className='container'>
@@ -21,7 +24,7 @@ export function Header() {
         <Link to={'/cart'}>
           <div className='header__cart'>
             <Link to='cart' className='button button--cart'>
-              <span>520 ₽</span>
+              <span>{currentPrice} ₽</span>
               <div className='button__delimiter'></div>
               <svg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
                 <path
@@ -46,7 +49,7 @@ export function Header() {
                   strokeLinejoin='round'
                 />
               </svg>
-              <span>3</span>
+              <span>{currentCount}</span>
             </Link>
           </div>
         </Link>
