@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 
 import { Sort } from '../components/Sort'
@@ -8,12 +8,16 @@ import { PizzaBlock } from '../components/PizzaBlock'
 import { Skeleton } from '../components/PizzaBlock/Skeleton'
 import { Pagination } from '../components/Pagination'
 import { SearchContext } from '../App'
+import { fetchPizzas } from '../redux/slices/pizzaSlice'
 
 export default function Home() {
+  const dispatch = useDispatch()
+  const { items } = useSelector((state) => state.pizza)
+
   const { activeSort, categoryId, isOrderDesc, pageNumber } = useSelector((state) => state.filter)
 
   const { searchValue } = React.useContext(SearchContext)
-  const [items, setItems] = React.useState([]) // all pizzas
+  //const [items, setItems] = React.useState([]) // all pizzas
   const [isFetching, setIsFetching] = React.useState(true)
 
   const category = categoryId ? `&category=${categoryId}` : ''
@@ -24,14 +28,15 @@ export default function Home() {
 
   React.useEffect(() => {
     setIsFetching(true)
+    dispatch(fetchPizzas({ category, page, sort, order, search }))
     window.scrollTo(0, 0)
-
-    axios
-      .get(`https://63d12d27120b32bbe8f2dbf8.mockapi.io/items?${category}${page}${sort}${order}${search}`)
-      .then((res) => {
-        setItems(res.data)
-        setIsFetching(false)
-      })
+    setIsFetching(false)
+    //axios
+    //  .get(`https://63d12d27120b32bbe8f2dbf8.mockapi.io/items?${category}${page}${sort}${order}${search}`)
+    //  .then((res) => {
+    //    setItems(res.data)
+    //    setIsFetching(false)
+    //  })
   }, [activeSort, categoryId, isOrderDesc, pageNumber, searchValue])
 
   const pizzas = items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)
