@@ -12,7 +12,7 @@ import { fetchPizzas } from '../redux/slices/pizzaSlice'
 
 export default function Home() {
   const dispatch = useDispatch()
-  const { items } = useSelector((state) => state.pizza)
+  const { items, status } = useSelector((state) => state.pizza)
 
   const { activeSort, categoryId, isOrderDesc, pageNumber } = useSelector((state) => state.filter)
 
@@ -27,10 +27,10 @@ export default function Home() {
   const search = `&search=${searchValue}`
 
   React.useEffect(() => {
-    setIsFetching(true)
+    //setIsFetching(true)
     dispatch(fetchPizzas({ category, page, sort, order, search }))
     window.scrollTo(0, 0)
-    setIsFetching(false)
+    //setIsFetching(false)
     //axios
     //  .get(`https://63d12d27120b32bbe8f2dbf8.mockapi.io/items?${category}${page}${sort}${order}${search}`)
     //  .then((res) => {
@@ -50,7 +50,20 @@ export default function Home() {
         <Sort />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
-      <div className='content__items'>{isFetching ? sceletons : pizzas}</div>
+      {status !== 'error' ? (
+        <div className='content__items'>{status === 'loading' ? sceletons : pizzas}</div>
+      ) : (
+        <div className='content__error'>
+          <h2>
+            Произошла ошибка при получении питсы <span>😕</span>
+          </h2>
+          <p>
+            Не уходите без своей, космически вкусной питсы
+            <br />
+            Попробуйте еще раз чуть позже..
+          </p>
+        </div>
+      )}
       <Pagination />
     </>
   )
