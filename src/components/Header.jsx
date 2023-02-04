@@ -21,7 +21,7 @@ export function Header() {
           </div>
         </Link>
         <Search />
-        <Link to={'/cart'}>
+        <div>
           <div className='header__cart'>
             <Link to='cart' className='button button--cart'>
               <span>{currentPrice} ₽</span>
@@ -52,7 +52,7 @@ export function Header() {
               <span>{currentCount}</span>
             </Link>
           </div>
-        </Link>
+        </div>
       </div>
     </div>
   )
