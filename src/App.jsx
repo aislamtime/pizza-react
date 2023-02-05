@@ -6,6 +6,7 @@ import { Header } from './components/Header'
 import Home from './pages/Home'
 import HotFound from './pages/NotFound'
 import Cart from './pages/Cart'
+import { PizzaDescription } from './pages/PizzaDescription'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path={'/'} element={<Home />} />
           <Route path={'/cart'} element={<Cart />} />
+          <Route path={'/pizza/:id'} element={<PizzaDescription />} />
           <Route path={'*'} element={<HotFound />} />
         </Routes>
       </div>

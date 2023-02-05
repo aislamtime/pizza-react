@@ -1,5 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import { addItem } from '../../redux/slices/cartSlice'
 
@@ -9,49 +10,30 @@ export function PizzaBlock({ id, imageUrl, title, types, sizes, price, category,
 
   const [activeSize, setActiveSize] = React.useState(26)
   const [activeType, setActiveType] = React.useState(0)
-  const [activePrice, setActivePrice] = React.useState(price)
 
   const pizzaType = ['Тонкое', 'Традиционное']
-  const pizzaSize = [26, 30, 40]
 
   const onAddItemClick = () => {
     const item = {
       id,
       title,
       imageUrl,
-      price: activePrice,
+      price,
       type: pizzaType[activeType],
       size: activeSize,
     }
     dispatch(addItem(item))
   }
 
-  //const changePrice = () => {
-  //  if (activeType === 1) {
-  //    if (activeSize === 30) {
-  //      setActivePrice(price + 80 + 100)
-  //    } else if (activePrice === 40) {
-  //      setActivePrice(price + 80 + 150)
-  //    } else {
-  //      setActivePrice(price + 80)
-  //    }
-  //  } else if (activeSize === 30) {
-  //    setActivePrice(price + 100)
-  //  } else if (activeSize === 40) {
-  //    setActivePrice(price + 150)
-  //  } else {
-  //    setActivePrice(price)
-  //  }
-  //}
-  //React.useEffect(changePrice, [activeSize, activeType])
-
   const currentItem = items.find((item) => item.id === id)
 
   return (
     <div className='pizza-block-wrapper'>
       <div className='pizza-block'>
-        <img className='pizza-block__image' src={imageUrl} alt='Pizza' />
-        <h4 className='pizza-block__title'>{title}</h4>
+        <Link to={`pizza/${id}`}>
+          <img className='pizza-block__image' src={imageUrl} alt='Pizza' />
+          <h4 className='pizza-block__title'>{title}</h4>
+        </Link>
         <div className='pizza-block__selector'>
           <ul>
             {types.map((index) => {
@@ -73,7 +55,7 @@ export function PizzaBlock({ id, imageUrl, title, types, sizes, price, category,
           </ul>
         </div>
         <div className='pizza-block__bottom'>
-          <div className='pizza-block__price'>от {activePrice} ₽</div>
+          <div className='pizza-block__price'>от {price} ₽</div>
           <button className='button button--outline button--add' onClick={onAddItemClick}>
             <svg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'>
               <path
