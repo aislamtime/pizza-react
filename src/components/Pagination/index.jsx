@@ -16,7 +16,7 @@ export function Pagination() {
       nextLabel='>'
       previousLabel='<'
       onPageChange={(e) => dispatch(changePageNumber(e.selected + 1))}
-      forcePage={pageNumber}
+      forcePage={pageNumber - 1}
       pageRangeDisplayed={9}
       pageCount={3}
     />
