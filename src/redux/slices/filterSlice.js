@@ -5,6 +5,7 @@ const initialState = {
   categoryId: 0,
   isOrderDesc: true,
   pageNumber: 1,
+  searchValue: '',
 }
 
 export const filterSlice = createSlice({
@@ -23,8 +24,14 @@ export const filterSlice = createSlice({
     changePageNumber(state, action) {
       state.pageNumber = action.payload
     },
+    setSearchValue(state, action) {
+      state.searchValue = action.payload
+    },
   },
 })
-export const { changeActiveSort, changeCategoryId, changeOrder, changePageNumber } = filterSlice.actions
+
+export const selectFilter = (state) => state.filter
+
+export const { changeActiveSort, changeCategoryId, changeOrder, changePageNumber, setSearchValue } = filterSlice.actions
 
 export default filterSlice.reducer

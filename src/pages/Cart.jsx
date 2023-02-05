@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 
 import { CartItem } from './CartItem'
 import EmptyCart from './EmptyCart'
-import { removeItems } from '../redux/slices/cartSlice'
+import { removeItems, selectCart } from '../redux/slices/cartSlice'
 
 export default function Cart() {
-  const { currentCount, currentPrice, items } = useSelector((state) => state.cart)
+  const { currentCount, currentPrice, items } = useSelector(selectCart)
   const dispatch = useDispatch()
 
   const clearCart = () => dispatch(removeItems())

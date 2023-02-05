@@ -1,10 +1,10 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { changeActiveSort, changeOrder } from '../redux/slices/filterSlice'
+import { changeActiveSort, changeOrder, selectFilter } from '../redux/slices/filterSlice'
 
 export function Sort() {
-  const { activeSort, isOrderDesc } = useSelector((state) => state.filter)
+  const { activeSort, isOrderDesc } = useSelector(selectFilter)
   const dispatch = useDispatch()
 
   const [collapsed, setCollapsed] = React.useState(true)

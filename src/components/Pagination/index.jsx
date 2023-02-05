@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactPaginate from 'react-paginate'
 import { useDispatch, useSelector } from 'react-redux'
-import { changePageNumber } from '../../redux/slices/filterSlice'
+import { changePageNumber, selectFilter } from '../../redux/slices/filterSlice'
 
 import s from './Pagination.module.scss'
 
 export function Pagination() {
-  const { pageNumber } = useSelector((state) => state.filter.pageNumber)
+  const { pageNumber } = useSelector(selectFilter)
   const dispatch = useDispatch()
 
   return (
