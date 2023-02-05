@@ -17,7 +17,7 @@ export default function Home() {
   const category = categoryId ? `&category=${categoryId}` : ''
   const sort = `&sortBy=${activeSort === 0 ? 'raiting' : activeSort === 1 ? 'price' : activeSort === 2 ? 'title' : ''}`
   const order = '&order=' + (isOrderDesc ? 'desc' : 'asc') // desc - по убыванию, asc - по возрастанию
-  const page = `&p=${pageNumber}&l=4` // +1 добавил потому что pageNumber = 0 а запросить можно тока от 1
+  const page = `&p=${pageNumber}&l=9` // +1 добавил потому что pageNumber = 0 а запросить можно тока от 1
   const search = `&search=${searchValue}`
 
   React.useEffect(() => {
