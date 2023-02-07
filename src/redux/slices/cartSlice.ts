@@ -1,5 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+export type CartItemType = {}
+
+export type CartType = {
+  currentPrice: number
+  currentCount: number
+  items: CartItemType[]
+}
+
 const initialState = {
   currentPrice: 0,
   currentCount: 0,
