@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootStateType } from '../store'
 
-export type FilterStateType = {
+export type FilterSliceType = {
   activeSort: number
   categoryId: number
   isOrderDesc: boolean
@@ -9,7 +9,7 @@ export type FilterStateType = {
   searchValue: string
 }
 
-const initialState: FilterStateType = {
+const initialState: FilterSliceType = {
   activeSort: 0,
   categoryId: 0,
   isOrderDesc: true,
@@ -21,25 +21,25 @@ export const filterSlice = createSlice({
   name: 'filters',
   initialState,
   reducers: {
-    changeActiveSort(state: FilterStateType, action) {
+    changeActiveSort(state, action: PayloadAction<number>) {
       state.activeSort = action.payload
     },
-    changeCategoryId(state: FilterStateType, action) {
+    changeCategoryId(state, action: PayloadAction<number>) {
       state.categoryId = action.payload
     },
-    changeOrder(state: FilterStateType) {
+    changeOrder(state) {
       state.isOrderDesc = !state.isOrderDesc
     },
-    changePageNumber(state: FilterStateType, action) {
+    changePageNumber(state, action: PayloadAction<number>) {
       state.pageNumber = action.payload
     },
-    setSearchValue(state: FilterStateType, action) {
+    setSearchValue(state, action: PayloadAction<string>) {
       state.searchValue = action.payload
     },
   },
 })
 
-export const selectFilter = (state: RootStateType): FilterStateType => state.filter
+export const selectFilter = (state: RootStateType): FilterSliceType => state.filter
 
 export const { changeActiveSort, changeCategoryId, changeOrder, changePageNumber, setSearchValue } = filterSlice.actions
 

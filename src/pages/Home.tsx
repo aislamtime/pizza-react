@@ -7,7 +7,7 @@ import { PizzaBlock } from '../components/PizzaBlock'
 import { Skeleton } from '../components/PizzaBlock/Skeleton'
 import { Pagination } from '../components/Pagination'
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice'
-import { selectFilter } from '../redux/slices/filterSlice'
+import { changeCategoryId, selectFilter } from '../redux/slices/filterSlice'
 
 export default function Home() {
   const { items, status } = useSelector(selectPizzaData)
@@ -21,18 +21,23 @@ export default function Home() {
   const search = `&search=${searchValue}`
 
   React.useEffect(() => {
-    dispatch(fetchPizzas({ category, page, sort, order, search }))
+    dispatch(
+      // @ts-ignore
+      fetchPizzas({ category, page, sort, order, search }),
+    )
     window.scrollTo(0, 0)
   }, [activeSort, categoryId, isOrderDesc, pageNumber, searchValue])
 
-  const pizzas = items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)
+  const pizzas = items.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza} />)
 
   const sceletons = [...new Array(8)].map((_, i) => <Skeleton key={i} />)
+
+  const changeCategory = (newCatogoryId: number) => dispatch(changeCategoryId(newCatogoryId))
 
   return (
     <>
       <div className='content__top'>
-        <Categories />
+        <Categories categoryId={categoryId} changeCategory={changeCategory} />
         <Sort />
       </div>
       <h2 className='content__title'>Все пиццы</h2>

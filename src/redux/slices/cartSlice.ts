@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootStateType } from '../store'
 
 export type CartItemType = {
@@ -10,13 +10,13 @@ export type CartItemType = {
   size: number
   count: number
 }
-export type CartStateType = {
+export type CartSliceType = {
   currentPrice: number
   currentCount: number
   items: CartItemType[]
 }
 
-const initialState: CartStateType = {
+const initialState: CartSliceType = {
   currentPrice: 0,
   currentCount: 0,
   items: [],
@@ -26,7 +26,7 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addItem(state: CartStateType, action) {
+    addItem(state, action) {
       const findItem = state.items.find((item) => item.id === action.payload.id)
 
       if (findItem) {
@@ -38,9 +38,9 @@ export const cartSlice = createSlice({
       state.currentCount += 1
       state.currentPrice += action.payload.price
     },
-    decrement(state, action) {
+    decrement(state, action: PayloadAction<string>) {
       state.items.map((item) => {
-        if (item.id === action.payload.id) {
+        if (item.id === action.payload) {
           if (item.count !== 1) {
             state.currentPrice -= item.price
             item.count -= 1
@@ -50,7 +50,7 @@ export const cartSlice = createSlice({
         }
       })
     },
-    removeItem(state, action) {
+    removeItem(state, action: PayloadAction<string>) {
       state.items.map((item) => {
         if (item.id === action.payload) {
           state.currentPrice -= item.price * item.count
@@ -67,7 +67,7 @@ export const cartSlice = createSlice({
   },
 })
 
-export const selectCart = (state: RootStateType): CartStateType => state.cart
+export const selectCart = (state: RootStateType): CartSliceType => state.cart
 
 export const { addItem, removeItems, decrement, removeItem } = cartSlice.actions
 

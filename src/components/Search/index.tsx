@@ -16,8 +16,8 @@ export default function Search() {
     [],
   )
 
-  const changeInputValue = (e: string) => {
-    setLocalInputValue(e)
+  const changeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLocalInputValue(e.currentTarget.value)
     search(localInputValue)
   }
 
@@ -35,7 +35,7 @@ export default function Search() {
       <input
         ref={inputRef}
         value={localInputValue}
-        onChange={(e) => changeInputValue(e.currentTarget.value)}
+        onChange={changeInputValue}
         className={s.input}
         placeholder='Поиск пиццы..'
         type='text'

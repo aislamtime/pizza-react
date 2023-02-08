@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 export function PizzaDescription() {
-  const [pizza, setPizza] = React.useState()
+  const [pizza, setPizza] = React.useState<any>()
   const { id } = useParams()
   const navigate = useNavigate()
 
