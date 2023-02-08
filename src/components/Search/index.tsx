@@ -9,14 +9,14 @@ export default function Search() {
   const [localInputValue, setLocalInputValue] = React.useState('')
   const { searchValue } = useSelector(selectFilter)
   const dispatch = useDispatch()
-  const inputRef = React.useRef()
+  const inputRef = React.useRef<HTMLInputElement>(null)
 
   const search = React.useCallback(
-    debounce((value) => dispatch(setSearchValue(value)), 300),
+    debounce((value: string) => dispatch(setSearchValue(value)), 300),
     [],
   )
 
-  const changeInputValue = (e) => {
+  const changeInputValue = (e: string) => {
     setLocalInputValue(e)
     search(localInputValue)
   }
@@ -24,7 +24,7 @@ export default function Search() {
   const onClearInput = () => {
     dispatch(setSearchValue(''))
     setLocalInputValue('')
-    inputRef.current.focus()
+    inputRef.current?.focus()
   }
 
   return (
