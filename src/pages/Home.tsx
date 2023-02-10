@@ -6,11 +6,11 @@ import { Categories } from '../components/Categories'
 import { PizzaBlock } from '../components/PizzaBlock'
 import { Skeleton } from '../components/PizzaBlock/Skeleton'
 import { Pagination } from '../components/Pagination'
-import { fetchPizzas } from '../redux/slices/pizza/slice'
 import { changeCategoryId } from '../redux/slices/filter/slice'
 import { useAppDispatch } from '../redux/store'
 import { selectPizzaData } from '../redux/slices/pizza/selectors'
 import { selectFilter } from '../redux/slices/filter/selectors'
+import { fetchPizzas } from '../redux/slices/pizza/asyncActions'
 
 export default function Home() {
   const { items, status } = useSelector(selectPizzaData)

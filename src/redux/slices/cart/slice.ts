@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { calcTotalCount } from '../../../utils/calcTotalCount'
+import { calcTotalPrice } from '../../../utils/calcTotalPrice'
 import { getCartFromLS } from '../../../utils/getCartFromLS'
 import { CartSliceType } from './types'
 
@@ -14,11 +16,6 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    //setItemsForLocalStorage(state, action) {
-    //  state.items = action.payload.items
-    //  state.totalCount = action.payload.totalCount
-    //  state.totalPrice = action.payload.totalPrice
-    //},
     addItem(state, action) {
       const findItem = state.items.find((item) => item.id === action.payload.id)
 
@@ -28,14 +25,15 @@ export const cartSlice = createSlice({
         state.items.push({ ...action.payload, count: 1 })
       }
 
-      state.totalCount += 1
-      state.totalPrice += action.payload.price
+      state.totalCount += 1 //calcTotalCount(state.items)
+      state.totalPrice += action.payload.price //calcTotalPrice(state.items)
     },
     decrement(state, action: PayloadAction<string>) {
       state.items.map((item) => {
         if (item.id === action.payload) {
           if (item.count !== 1) {
             state.totalPrice -= item.price
+            state.totalCount -= 1
             item.count -= 1
           } else {
             return
