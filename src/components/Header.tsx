@@ -4,22 +4,12 @@ import { Link, useLocation } from 'react-router-dom'
 import Search from './Search'
 import pizzaSvg from '../assets/img/pizza-logo.svg'
 import { useSelector } from 'react-redux'
-import { selectCart } from '../redux/slices/cartSlice'
-import { useAppDispatch } from '../redux/store'
+import { selectCart } from '../redux/slices/cart/selectors'
 
 export function Header() {
   const { items, totalPrice, totalCount } = useSelector(selectCart)
-  //const dispatch = useAppDispatch()
 
   const isMounted = React.useRef(false)
-
-  //React.useEffect(() => {
-  //  const cartItems = localStorage.getItem('cartItems')
-  //  const totalCount = localStorage.getItem('totalCount')
-  //  const totalPrice = localStorage.getItem('totalPrice')
-  //  if (cartItems)
-  //    dispatch(setItemsForLocalStorage({ items: JSON.parse(cartItems), totalCount, totalPrice }))
-  //}, [])
 
   React.useEffect(() => {
     if (isMounted.current) {

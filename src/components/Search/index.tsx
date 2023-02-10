@@ -3,8 +3,9 @@ import debounce from 'lodash.debounce'
 
 import s from './Search.module.scss'
 import { useSelector } from 'react-redux'
-import { selectFilter, setSearchValue } from '../../redux/slices/filterSlice'
+import { setSearchValue } from '../../redux/slices/filter/slice'
 import { useAppDispatch } from '../../redux/store'
+import { selectFilter } from '../../redux/slices/filter/selectors'
 
 export default function Search() {
   const [localInputValue, setLocalInputValue] = React.useState('')

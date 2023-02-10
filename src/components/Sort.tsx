@@ -1,7 +1,7 @@
 import { useWhyDidYouUpdate } from 'ahooks'
 import React from 'react'
 
-import { changeActiveSort, changeOrder, selectFilter } from '../redux/slices/filterSlice'
+import { changeActiveSort, changeOrder } from '../redux/slices/filter/slice'
 import { useAppDispatch } from '../redux/store'
 
 type SortPropsType = {

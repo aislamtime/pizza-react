@@ -1,9 +1,11 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { selectCart } from '../../redux/slices/cart/selectors'
 
-import { addItem, CartItemType, selectCart } from '../../redux/slices/cartSlice'
-import { PizzaType } from '../../redux/slices/pizzaSlice'
+import { addItem } from '../../redux/slices/cart/slice'
+import { CartItemType } from '../../redux/slices/cart/types'
+import { PizzaType } from '../../redux/slices/pizza/types'
 import { useAppDispatch } from '../../redux/store'
 
 export const PizzaBlock: React.FC<PizzaType> = ({ id, imageUrl, title, types, sizes, price }) => {

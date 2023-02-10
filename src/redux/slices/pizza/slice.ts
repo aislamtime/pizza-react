@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { RootStateType } from '../store'
+import { PizzaStateType, PizzaType, Status } from './types'
 
 //type FetchPizzasArgsType = Record<string, string>
 export const fetchPizzas = createAsyncThunk<PizzaType[], Record<string, string>>(
@@ -14,24 +14,6 @@ export const fetchPizzas = createAsyncThunk<PizzaType[], Record<string, string>>
   },
 )
 
-export type PizzaType = {
-  id: string
-  title: string
-  imageUrl: string
-  price: number
-  types: number[]
-  sizes: number[]
-}
-enum Status {
-  LOADING = 'loading',
-  SUCCESS = 'success',
-  ERROR = 'error',
-}
-export type PizzaStateType = {
-  items: PizzaType[]
-  status: Status
-}
-
 const initialState: PizzaStateType = {
   items: [],
   status: Status.LOADING,
@@ -40,12 +22,7 @@ const initialState: PizzaStateType = {
 export const pizzaSlice = createSlice({
   name: 'pizza',
   initialState,
-  reducers: {
-    //! fix
-    //setItems(state, action: PayloadAction<PizzaType[]>) {
-    //  state.items = action.payload
-    //},
-  },
+  reducers: {},
   extraReducers(builder) {
     builder.addCase(fetchPizzas.pending, (state) => {
       state.status = Status.LOADING
@@ -61,9 +38,5 @@ export const pizzaSlice = createSlice({
     })
   },
 })
-
-export const selectPizzaData = (state: RootStateType): PizzaStateType => state.pizza
-
-//export const { setItems } = pizzaSlice.actions
 
 export default pizzaSlice.reducer
