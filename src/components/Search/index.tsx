@@ -13,7 +13,7 @@ export default function Search() {
   const inputRef = React.useRef<HTMLInputElement>(null)
 
   const search = React.useCallback(
-    debounce((value: string) => dispatch(setSearchValue(value)), 300),
+    debounce((value: string) => dispatch(setSearchValue(value)), 500),
     [],
   )
 

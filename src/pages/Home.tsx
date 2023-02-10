@@ -31,13 +31,16 @@ export default function Home() {
   const pizzas = items.map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza} />)
   const sceletons = [...new Array(8)].map((_, i) => <Skeleton key={i} />)
 
-  const changeCategory = (newCatogoryId: number) => dispatch(changeCategoryId(newCatogoryId))
+  const changeCategory = React.useCallback(
+    (newCatogoryId: number) => dispatch(changeCategoryId(newCatogoryId)),
+    [],
+  )
 
   return (
     <>
       <div className='content__top'>
         <Categories categoryId={categoryId} changeCategory={changeCategory} />
-        <Sort />
+        <Sort activeSort={activeSort} isOrderDesc={isOrderDesc} />
       </div>
       <h2 className='content__title'>Все пиццы</h2>
       {status !== 'error' ? (

@@ -52,7 +52,7 @@ export const pizzaSlice = createSlice({
       state.items = []
     })
     builder.addCase(fetchPizzas.fulfilled, (state, action: PayloadAction<PizzaType[]>) => {
-      state.status = Status.SUCCESS
+      action.payload.length === 0 ? (state.status = Status.ERROR) : (state.status = Status.SUCCESS)
       state.items = action.payload
     })
     builder.addCase(fetchPizzas.rejected, (state) => {

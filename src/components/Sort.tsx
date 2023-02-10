@@ -1,11 +1,15 @@
+import { useWhyDidYouUpdate } from 'ahooks'
 import React from 'react'
-import { useSelector } from 'react-redux'
 
 import { changeActiveSort, changeOrder, selectFilter } from '../redux/slices/filterSlice'
 import { useAppDispatch } from '../redux/store'
 
-export function Sort() {
-  const { activeSort, isOrderDesc } = useSelector(selectFilter)
+type SortPropsType = {
+  activeSort: number
+  isOrderDesc: boolean
+}
+
+export const Sort: React.FC<SortPropsType> = React.memo(({ activeSort, isOrderDesc }) => {
   const dispatch = useAppDispatch()
 
   const [collapsed, setCollapsed] = React.useState(true)
@@ -13,6 +17,7 @@ export function Sort() {
 
   const sort = ['популярности', 'цене', 'алфавиту']
 
+  useWhyDidYouUpdate('Sort', { activeSort, isOrderDesc, collapsed, hoveredItem })
   return (
     <div className='sort'>
       <div className='sort__label'>
@@ -65,4 +70,4 @@ export function Sort() {
       )}
     </div>
   )
-}
+})
