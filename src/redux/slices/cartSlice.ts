@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { getCartFromLS } from '../../utils/getCartFromLS'
 import { RootStateType } from '../store'
 
 export type CartItemType = {
@@ -11,21 +12,28 @@ export type CartItemType = {
   count: number
 }
 export type CartSliceType = {
-  currentPrice: number
-  currentCount: number
+  totalPrice: number
+  totalCount: number
   items: CartItemType[]
 }
 
+const { items, totalCount, totalPrice } = getCartFromLS()
+
 const initialState: CartSliceType = {
-  currentPrice: 0,
-  currentCount: 0,
-  items: [],
+  totalPrice,
+  totalCount,
+  items,
 }
 
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
+    //setItemsForLocalStorage(state, action) {
+    //  state.items = action.payload.items
+    //  state.totalCount = action.payload.totalCount
+    //  state.totalPrice = action.payload.totalPrice
+    //},
     addItem(state, action) {
       const findItem = state.items.find((item) => item.id === action.payload.id)
 
@@ -35,14 +43,14 @@ export const cartSlice = createSlice({
         state.items.push({ ...action.payload, count: 1 })
       }
 
-      state.currentCount += 1
-      state.currentPrice += action.payload.price
+      state.totalCount += 1
+      state.totalPrice += action.payload.price
     },
     decrement(state, action: PayloadAction<string>) {
       state.items.map((item) => {
         if (item.id === action.payload) {
           if (item.count !== 1) {
-            state.currentPrice -= item.price
+            state.totalPrice -= item.price
             item.count -= 1
           } else {
             return
@@ -53,16 +61,16 @@ export const cartSlice = createSlice({
     removeItem(state, action: PayloadAction<string>) {
       state.items.map((item) => {
         if (item.id === action.payload) {
-          state.currentPrice -= item.price * item.count
-          state.currentCount -= item.count
+          state.totalPrice -= item.price * item.count
+          state.totalCount -= item.count
         }
       })
       state.items = state.items.filter((item) => item.id !== action.payload)
     },
     removeItems(state) {
       state.items = []
-      state.currentCount = 0
-      state.currentPrice = 0
+      state.totalCount = 0
+      state.totalPrice = 0
     },
   },
 })

@@ -8,7 +8,7 @@ import { removeItems, selectCart } from '../redux/slices/cartSlice'
 import { useAppDispatch } from '../redux/store'
 
 export default function Cart() {
-  const { currentCount, currentPrice, items } = useSelector(selectCart)
+  const { totalCount, totalPrice, items } = useSelector(selectCart)
   const dispatch = useAppDispatch()
 
   const clearCart = () => dispatch(removeItems())
@@ -94,11 +94,11 @@ export default function Cart() {
           <div className='cart__bottom-details'>
             <span>
               {' '}
-              Всего пицц: <b>{currentCount} шт.</b>{' '}
+              Всего пицц: <b>{totalCount} шт.</b>{' '}
             </span>
             <span>
               {' '}
-              Сумма заказа: <b>{currentPrice} ₽</b>{' '}
+              Сумма заказа: <b>{totalPrice} ₽</b>{' '}
             </span>
           </div>
           <div className='cart__bottom-buttons'>

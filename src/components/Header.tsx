@@ -5,9 +5,28 @@ import Search from './Search'
 import pizzaSvg from '../assets/img/pizza-logo.svg'
 import { useSelector } from 'react-redux'
 import { selectCart } from '../redux/slices/cartSlice'
+import { useAppDispatch } from '../redux/store'
 
 export function Header() {
-  const { currentPrice, currentCount } = useSelector(selectCart)
+  const { items, totalPrice, totalCount } = useSelector(selectCart)
+  //const dispatch = useAppDispatch()
+
+  const isMounted = React.useRef(false)
+
+  //React.useEffect(() => {
+  //  const cartItems = localStorage.getItem('cartItems')
+  //  const totalCount = localStorage.getItem('totalCount')
+  //  const totalPrice = localStorage.getItem('totalPrice')
+  //  if (cartItems)
+  //    dispatch(setItemsForLocalStorage({ items: JSON.parse(cartItems), totalCount, totalPrice }))
+  //}, [])
+
+  React.useEffect(() => {
+    if (isMounted.current) {
+      localStorage.setItem('cartItems', JSON.stringify(items))
+    }
+    isMounted.current = true
+  }, [items])
 
   const location = useLocation()
 
@@ -28,7 +47,7 @@ export function Header() {
           <div className='header__cart'>
             {location.pathname !== '/cart' ? (
               <Link to='cart' className='button button--cart'>
-                <span>{currentPrice} ₽</span>
+                <span>{totalPrice} ₽</span>
                 <div className='button__delimiter'></div>
                 <svg
                   width='18'
@@ -58,7 +77,7 @@ export function Header() {
                     strokeLinejoin='round'
                   />
                 </svg>
-                <span>{currentCount}</span>
+                <span>{totalCount}</span>
               </Link>
             ) : (
               <Link to='/' className='button button--cart'>
