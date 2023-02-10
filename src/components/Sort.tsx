@@ -1,11 +1,12 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import { changeActiveSort, changeOrder, selectFilter } from '../redux/slices/filterSlice'
+import { useAppDispatch } from '../redux/store'
 
 export function Sort() {
   const { activeSort, isOrderDesc } = useSelector(selectFilter)
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const [collapsed, setCollapsed] = React.useState(true)
   const [hoveredItem, setHoveredItem] = React.useState(0)
@@ -51,7 +52,10 @@ export function Sort() {
           <ul>
             {sort.map((el, i) => {
               return (
-                <li key={i} className={activeSort === i ? 'active' : ''} onMouseEnter={() => setHoveredItem(i)}>
+                <li
+                  key={i}
+                  className={activeSort === i ? 'active' : ''}
+                  onMouseEnter={() => setHoveredItem(i)}>
                   {sort[i]}
                 </li>
               )
