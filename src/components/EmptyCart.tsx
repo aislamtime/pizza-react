@@ -2,7 +2,7 @@ import React from 'react'
 
 import emptyCartPng from '../assets/img/empty-cart.png'
 
-export default function EmptyCart() {
+export const EmptyCart: React.FC = () => {
   return (
     <div className='cart cart--empty'>
       <h2>

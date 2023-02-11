@@ -2,11 +2,11 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { CartItem } from '../components/CartItem'
-import EmptyCart from './EmptyCart'
 import { removeItems } from '../redux/slices/cart/slice'
 import { useAppDispatch } from '../redux/store'
 import { selectCart } from '../redux/slices/cart/selectors'
+
+import { CartItem, EmptyCart } from '../components'
 
 export default function Cart() {
   const { totalCount, totalPrice, items } = useSelector(selectCart)
